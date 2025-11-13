@@ -23,7 +23,7 @@ interface AuthResult {
 export class MsAuth extends WebPlugin implements MsAuthPlugin {
   async login(options: WebLoginOptions): Promise<AuthResult> {
     const context = this.createContext(options);
-
+    
     try {
       return await this.acquireTokenSilently(context, options.scopes).catch(() =>
         this.acquireTokenInteractively(context, options),
@@ -87,7 +87,9 @@ export class MsAuth extends WebPlugin implements MsAuthPlugin {
       },
     };
 
-    return new PublicClientApplication(config);
+    const msalInstance = new PublicClientApplication(config);
+    await msalInstance.initialize()
+    return msalInstance
   }
 
   private getCurrentUrl(): string {
