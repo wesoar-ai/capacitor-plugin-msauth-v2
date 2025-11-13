@@ -59,7 +59,7 @@ export class MsAuth extends WebPlugin implements MsAuthPlugin {
     }
   }
 
-  logout(options: WebLogoutOptions): Promise<void> {
+  async logout(options: WebLogoutOptions): Promise<void> {
     const context = await this.createContext(options);
 
     if (!context.getAllAccounts()[0]) {
