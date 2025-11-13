@@ -22,7 +22,7 @@ interface AuthResult {
 
 export class MsAuth extends WebPlugin implements MsAuthPlugin {
   async login(options: WebLoginOptions): Promise<AuthResult> {
-    const context = this.createContext(options);
+    const context = await this.createContext(options);
     
     try {
       return await this.acquireTokenSilently(context, options.scopes).catch(() =>
@@ -36,7 +36,7 @@ export class MsAuth extends WebPlugin implements MsAuthPlugin {
   }
 
   async loginInteractively(options: WebLoginOptions): Promise<AuthResult> {
-    const context = this.createContext(options);
+    const context = await this.createContext(options);
 
     try {
       return this.acquireTokenInteractively(context, options);
@@ -48,7 +48,7 @@ export class MsAuth extends WebPlugin implements MsAuthPlugin {
   }
 
   async loginSilently(options: WebLoginOptions): Promise<AuthResult> {
-    const context = this.createContext(options);
+    const context = await this.createContext(options);
 
     try {
       return await this.acquireTokenSilently(context, options.scopes);
@@ -60,7 +60,7 @@ export class MsAuth extends WebPlugin implements MsAuthPlugin {
   }
 
   logout(options: WebLogoutOptions): Promise<void> {
-    const context = this.createContext(options);
+    const context = await this.createContext(options);
 
     if (!context.getAllAccounts()[0]) {
       return Promise.reject(new Error('Nothing to sign out from.'));
