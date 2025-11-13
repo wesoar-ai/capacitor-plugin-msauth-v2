@@ -62,7 +62,9 @@ export class MsAuth extends WebPlugin implements MsAuthPlugin {
       },
     };
 
-    return new PublicClientApplication(config);
+    const msalInstance = new PublicClientApplication(config);
+    await msalInstance.initialize()
+    return  msalInstance
   }
 
   private getCurrentUrl(): string {
